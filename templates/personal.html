@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://v3.bootcss.com/examples/dashboard/ -->
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/imgs/icon.ico">
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link href="/static/Dashboard-Template/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/static/Dashboard-Template/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/Dashboard-Template/dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/{{ blog.theme }}">
+    {% block page-css %}
+    {% endblock %}
+    <title>{{ page_title }}</title>
+    {% block page_style %}
+    {% endblock %}
+</head>
+<body>
+
+
+<div class="blog_title container-fluid">
+    <div class="title"><a class="title" href="/blog/{{ user.username }}">{{ blog.title }}</a></div>
+    <a class="click" role="button" href="/blog/index">博客园</a>
+    <a class="click" role="button" href="">首页</a>
+    <a class="click" role="button" href="">新随笔</a>
+    <a class="click" role="button" href="">联系</a>
+    <a class="click" role="button" href="">订阅</a>
+    <a id="manage" class="click" role="button" >管理</a>
+
+</div>
+<div class="info" user="{{ request.user.username}}" path="{{ request.path }}"></div>
+<div class="blog_body container-fluid">
+    <div class="row">
+
+        <div class="zuo col-lg-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">公告</h4>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">我的标签</h4>
+                </div>
+                <div class="panel-body">
+                    {% for tag in tag_list %}
+                        <div><a href="/blog/{{ user.username }}/tag/{{ tag.nid }}">{{ tag.tag_name }}</a>({{ tag.article_set.all.count }})</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h4 class="panel-title">随笔分类</h4>
+                </div>
+                <div class="panel-body">
+                    {% for cate in cate_list %}
+                        <div><a href="/blog/{{ user.username }}/cate/{{ cate.nid }}">{{ cate.cate_name }}</a>({{ cate.article_set.all.count }})</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h4 class="panel-title">日期分类</h4>
+                </div>
+                <div class="panel-body">
+                    {% for date in date_list %}
+                        <div><a href="/blog/{{ user.username }}/date/{{ date.date_cate }}">{{ date.new_date_cate }}</a>({{ date.c }})</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div style="border-bottom: 1px solid black" class="right col-lg-9">
+            {% block page_article %}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="zuo col-lg-3"></div>
+        <div class="col-lg-9">
+            {% block page_article_xia %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+<script src="/static/Dashboard-Template/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="/static/Dashboard-Template/bootstrap.min.js"></script>
+<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+<script src="/static/Dashboard-Template/holder.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="/static/Dashboard-Template/ie10-viewport-bug-workaround.js"></script>
+<script src="/static/js/personal.js"></script>
+{% block page-js %}
+{% endblock %}
+
+</body>
+</html>
+
+
+
+
+
+
+
+

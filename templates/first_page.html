@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://v3.bootcss.com/examples/dashboard/ -->
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/imgs/icon.ico">
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link href="/static/Dashboard-Template/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/static/Dashboard-Template/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/Dashboard-Template/dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/whl.css">
+    <title>博客园</title>
+</head>
+<body>
+{#导航条#}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/blog/index">博客园</a>
+            <a class="navbar-brand t1" href="">随笔</a>
+            <a class="navbar-brand t" href="">园子</a>
+            <a class="navbar-brand t" href="">新闻</a>
+            <a class="navbar-brand t" href="">博问</a>
+            <a class="navbar-brand t" href="">小组</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.user.is_authenticated %}
+                    <li><a href="/blog/{{ request.user.username }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>{{ request.user.username }}
+                    </a></li>
+                    <li><a style="font-size: 12px" href="/blog/set_pwd/{{ request.user.username }}">修改密码</a>
+                    </li>
+                    <li><a style="font-size: 12px" href="/blog/logout">注销</a></li>
+                {% else %}
+                    <li><a style="font-size: 12px" href="/blog/login_confirm/">登录</a></li>
+                    <li><a style="font-size: 12px" href="/blog/reg_check">注册</a></li>
+                {% endif %}
+                <li class="dropdown">
+                    <a style="font-size: 12px" class="dropdown-toggle" data-toggle="dropdown"
+                       role="button" aria-haspopup="true" aria-expanded="true">设置 <span class="caret"></span></a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">网站分类</h4>
+                </div>
+                <div class="panel-body">
+                    {#                    {% for catewebsite in cate_list %}#}
+                    {#                        <div class="cate">{{ catewebsite.name }}</div>#}
+                    {#                        <ul class="catedetail hide">#}
+                    {#                            {% for item in catewebsite.catewebsitedetail_set.all %}#}
+                    {#                                <li class="catedetail"><a href="">{{ item.name }}</a></li>#}
+                    {#                            {% endfor %}#}
+                    {#                        </ul>#}
+                    {#                    {% endfor %}#}
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        {% for catewebsite in catewebsite_list %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="{{ catewebsite.id }}">
+                                    <h4 class="panel-title">
+                                        <a style="font-size: 15px" role="button" data-toggle="collapse" data-parent="#accordion"
+                                           href="#{{ catewebsite.name }}"
+                                           aria-expanded="false" aria-controls="{{ catewebsite.name }}">
+                                            {{ catewebsite.name }}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="{{ catewebsite.name }}" class="panel-collapse collapse" role="tabpanel"
+                                     aria-labelledby="{{ catewebsite.id }}">
+                                    <div class="panel-body">
+                                        <div>
+                                            {% for item in catewebsite.catewebsitedetail_set.all %}
+                                                <div style="text-align:left ;"><a
+                                                        href="/blog/select/{{ item.name }}">{{ item.name }}</a>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {#                    {% for catewebsite in cate_list %}#}
+                    {#                        <div class="panel panel-info">#}
+                    {#                            <div class="panel-heading">#}
+                    {#                                <h3  class="panel-title">{{ catewebsite.name }}</h3>#}
+                    {#                            </div>#}
+                    {#                            <div class="panel-body" style="display: none">#}
+                    {#                                {% for item in catewebsite.catewebsitedetail_set.all %}#}
+                    {#                                    <div class="catedetail">{{ item.name }}</div>#}
+                    {#                                {% endfor %}#}
+                    {#                            </div>#}
+                    {#                        </div>#}
+                    {#                    {% endfor %}#}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            {% for article in article_list %}
+                <div id="article_title"><h4><strong><a href="/blog/{{ article.article_user }}/p/{{ article.nid }}">{{ article.title }}</a></strong></h4></div>
+                <div class="row">
+                    <div class="col-md-1">
+                        <a href="/blog/{{ article.article_user.username }}/"><img class="user_img" src="/media/{{ article.article_user.avatar }}" alt=""
+                                        width="60px" height="60px"></a>
+                    </div>
+                    <div class="col-md-10 article_desc">
+                        <span>{{ article.article_desc }}</span>
+                    </div>
+                </div>
+                <div class="info">
+                    <a href="/blog/{{ article.article_user.username }}/">{{ article.article_user.username }}</a>&nbsp;&nbsp;
+                    <span class="article_time">发布于 {{ article.create_time|date:"Y-m-d H:i" }}</span>&nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-comment" style="margin-top: 3px"></span>
+                    <span>
+                    <a id="conment" href="">评论({{ article.comment_count }})</a>
+                </span>&nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-thumbs-up" style="margin-top: 5px"></span>
+                    <span>
+                    <a class="up" href="">推荐({{ article.up_count }})</a>
+                </span>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+        <div class="col-lg-3">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Panel title</h4>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Panel title</h4>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Panel title</h4>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/Dashboard-Template/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="/static/Dashboard-Template/bootstrap.min.js"></script>
+<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+<script src="/static/Dashboard-Template/holder.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="/static/Dashboard-Template/ie10-viewport-bug-workaround.js"></script>
+{#    <script src="/static/bootstrap-3.3.7/js/bootstarp.js/bootstrap.min.js"></script>#}
+<script src="/static/js/first-page-js.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+

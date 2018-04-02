@@ -1,0 +1,31 @@
+{% extends "manage.html" %}
+{% block page-article %}
+    <div id="Main">
+        <div id="Editor_Results_Header" class="CollapsibleHeader">
+            <span id="Editor_Results_headerTitle">文章(默认不在您的博客首页显示，主要用于转载，发布原创博文要通过“随笔”)</span>
+        </div>
+        <div id="Editor_Results_Contents"
+             style="margin-top: 10px;height:20px;">
+            <div class="table-title">
+                <div class="pull-left" style="width:60%;text-align: left"><strong>标题</strong></div>
+                <div class="pull-right" style="width:10%;text-align: center"><strong>操作</strong></div>
+                <div class="pull-right" style="width:10%;text-align: center"><strong>操作</strong></div>
+                <div class="pull-right" style="width:10%;text-align: center"><strong>推荐数</strong></div>
+                <div class="pull-right" style="width:10%;text-align: center"><strong>评论数</strong></div>
+            </div>
+            {% for article in article_list %}
+                <div class="table-body" style="margin-top: 5px">
+                    <div class="pull-left"
+                         style="width:60%;text-align: left"><a href="">{{ article.title }}</a>({{ article.ctime }})
+                    </div>
+                    <div class="pull-right" style="width:10%;text-align: center"><a
+                            href="/blog/del/article/{{ article.nid }}">删除</a></div>
+                    <div class="pull-right" style="width:10%;text-align: center"><a
+                            href="/blog/edit/article/{{ article.nid }}">编辑</a></div>
+                    <div class="pull-right" style="width:10%;text-align: center">{{ article.up_count }}</div>
+                    <div class="pull-right" style="width:10%;text-align: center">{{ article.comment_count }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

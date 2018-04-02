@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>登录</title>
+    <link rel="icon" href="/static/imgs/icon.ico">
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/whll.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class=""><h2 class="text-center">请登录</h2></div>
+    </div>
+    <form class="form-horizontal">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username" class="col-sm-3 control-label">用户名</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="username" placeholder="用户名">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-3 control-label">密码</label>
+            <div class="col-sm-6">
+                <input type="password" class="form-control" id="password" placeholder="密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="check_code" class="col-sm-3 control-label">验证码</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="check_code" placeholder="请输入右边图片中的验证码">
+            </div>
+            <div class="col-sm-3">
+                <img class="pull-right" src="/blog/get_check_img/" width="260" height="40" id="check_img">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-7">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> 记住我
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" style="color: red">
+            <label class="col-sm-3 control-label"></label>
+            <div class="col-sm-6 error">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-3">
+                <a role="button" class="btn btn-primary btn-block" id="popup-submit" >提交</a>
+
+            </div>
+            <div id="popup-captcha"></div>
+        </div>
+    </form>
+</div>
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<!-- 为使用方便，直接使用jquery.js库，如您代码中不需要，可以去掉 -->
+<script src="http://code.jquery.com/jquery-1.12.3.min.js"></script>
+<!-- 引入封装了failback的接口--initGeetest -->
+<script src="http://static.geetest.com/static/tools/gt.js"></script>
+<script src="/static/js/jquery.cookie.js"></script>
+<script src="/static/js/login_blog.js"></script>
+</body>
+</html>

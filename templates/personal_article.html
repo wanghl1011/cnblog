@@ -1,0 +1,232 @@
+{% extends "personal.html" %}
+{% block page_style %}
+    <style>
+        a.article_title:hover {
+            color: #9cba39;
+            text-decoration: none;
+        }
+
+        a.haha {
+            color: black;
+            border-bottom: 1px dotted #333
+        }
+
+        a.haha:hover {
+            color: #9cba39;
+            text-decoration: none;
+        }
+
+        a.up, a.down {
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .diggit {
+            float: left;
+            width: 46px;
+            height: 52px;
+            background: url(/static/imgs/up.gif) no-repeat;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 2px;
+            padding-top: 5px;
+        }
+
+        .buryit {
+            float: right;
+            margin-left: 20px;
+            width: 46px;
+            height: 52px;
+            background: url(/static/imgs/down.gif) no-repeat;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 2px;
+            padding-top: 5px;
+        }
+
+        .diggword {
+            margin-top: 65px;
+            margin-left: 0;
+            font-size: 12px;
+            color: gray;
+        }
+
+        #div_digg {
+            float: right;
+            margin-bottom: 10px;
+            margin-right: 30px;
+            font-size: 12px;
+            width: 125px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        #tbCommentAuthor {
+            background-image: url(/static/imgs/ren.gif);
+            background-repeat: no-repeat;
+            background-position: 3px -3px;
+            border: 1px solid #ccc;
+            padding: 4px 4px 4px 30px;
+            width: 300px;
+            font-size: 13px;
+        }
+
+        span.span {
+            margin-left: 8px;
+        }
+{#        .comment{#}
+{#            width:100px;#}
+{#            height:50px;#}
+{#            background-color: slategrey;#}
+{#            border: 1px solid red;#}
+{#        }#}
+    </style>
+
+{% endblock %}
+{% block page_article %}
+    <div><h4><strong>
+        <a class="article_title" href="/blog/{{ user.username }}/p/{{ article.nid }}">{{ article.title }}</a>
+    </strong></h4></div>
+    <hr>
+    <div style="text-align: justify">{{ article.articledetail.content|safe }}</div>
+    <hr>
+    <div style="font-size: 15px;">
+        <span>分类:</span>
+        <a class="haha"
+           href="/blog/{{ user.username }}/cate/{{ article.article_cate.nid }}">{{ article.article_cate.cate_name }}</a>
+    </div>
+    <div style="font-size: 10px;margin-top: 10px;">
+        <span>标签:</span>
+        {% for tag in article.article_tags.all %}
+            <a class="haha" href="/blog/{{ user.username }}/tag/{{ tag.nid }}">{{ tag.tag_name }}</a>&nbsp;
+        {% endfor %}
+    </div>
+    <hr>
+    <hr>
+    {#    <div class="pull-right">#}
+    {#        <div><a href="" role="button" class="btn btn-primary down">{{ article.down_count }}</a></div>#}
+    {#        <div><a href="/blog/{{ request.user }}/down/{{ article.nid }}" role="button" class="btn btn-primary down"><span class="glyphicon glyphicon-thumbs-down"></span><span>反对</span></a></div>#}
+    {#    </div>#}
+    {#    <div class="pull-right" style="margin-right: 10px">#}
+    {#        <div><a href="" role="button" class="btn btn-primary up">{{ article.up_count }}</a></div>#}
+    {#        <div><a href="/blog/{{ request.user }}/up/{{ article.nid }}" role="button" class="btn btn-primary up"><span class="glyphicon glyphicon-thumbs-up"></span><span>推荐</span></a></div>#}
+    {#    </div>#}
+    {#    <div class="pull-right" style="color: red;font-size: 15px;">{{ error_msg }}</div>#}
+    <div id="div_digg">
+        {% csrf_token %}
+        {#        推荐#}
+        <div class="diggit up_down" up_down="up">
+            <span class="diggnum" id="digg_count">{{ article.up_count }}</span>
+        </div>
+        {#        反对#}
+        <div class="buryit up_down" up_down="down">
+            <span class="burynum" id="bury_count">{{ article.down_count }}</span>
+        </div>
+        <div class="diggword" id="digg_tips" style="color: red;"></div>
+        <div id="article_id" article_id="{{ article.nid }}"></div>
+    </div>
+
+{% endblock %}
+{% block page_article_xia %}
+    <div>
+        <span id="username" style="float: right;margin-left: 10px"><a
+                href="/blog/{{ user.username }}">{{ user.username }}</a></span>
+        <span style="float: right;margin-left: 10px">{{ article.create_time|date:'Y-m-d H:i' }}</span>
+        <span style="float: right">posted @</span>
+    </div>
+
+    <div>
+        <h4>评论树列表：</h4>
+        <div class="comment_tree">
+{#            <ul>#}
+{#            <li class="list-group-item">#}
+{#                <div>#}
+{#                    <div><span>1111111</span></div>#}
+{#                    <ul>#}
+{#                        <li class="list-group-item">#}
+{#                            <div>#}
+{#                                <div><span>2222222</span></div>#}
+{#                            </div>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                </div>#}
+{#            </li>#}
+{#        </ul>#}
+{#                    <div class="comment">#}
+{#                        <div class="content"><span>111111111</span></div>#}
+{#                    </div>#}
+{#                    <div class="comment">#}
+{#                        <div class="content"><span>22222222222</span></div>#}
+{#                        <div class="comment">#}
+{#                            <div class="content"><span>333333333333</span></div>#}
+{#                        </div>#}
+{#                        <div class="comment">#}
+{#                            <div class="content"><span>44444444444</span></div>#}
+{#                        </div>#}
+{#                    </div>#}
+        </div>
+    </div>
+
+
+
+    <div>
+        <h4>评论楼列表：</h4>
+        <ul class="list-group">
+            {% for comment in comment_list %}
+                <li class="list-group-item li">
+                    <div>
+                        <span>#{{ forloop.counter }}楼</span>
+                        <span class="span">{{ comment.create_time|date:"Y-m-d H:i" }}</span>
+                        <span class="span">
+                            <a href="/blog/{{ comment.user.username }}">{{ comment.user.username }}</a>
+                        </span>
+                        <span class="pull-right">
+                            <a style="margin-right: 10px" role="button" class="reply"
+                               username="{{ comment.user.username }}" comment_id="{{ comment.nid }}">回复</a>
+                        </span>
+                        {#                        {% if comment.user.username == request.user.username %}#}
+                        {#                            <span class="pull-right">#}
+                        {#                                <a style="margin-right: 10px" role="button" class="delete_comment" comment_id="{{ comment.nid }}">删除</a>#}
+                        {#                            </span>#}
+                        {#                        {% endif %}#}
+                    </div>
+                    {% if comment.parent_comment_id %}
+                        <div class="well">
+                            <span>@<a
+                                    href="/blog/{{ comment.parent_comment.user.username }}">{{ comment.parent_comment.user.username }}</a></span>
+                            <span>{{ comment.parent_comment.content }}</span>
+                        </div>
+                    {% endif %}
+                    <div>{{ comment.content }}</div>
+                </li>
+            {% empty %}
+                <li style="color: red" class="list-group-item empty"><h5>目前暂无评论!</h5></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <h4><img src="/static/imgs/com.gif" alt=""> 发表评论</h4>
+    <p>昵称：<input type="text" id="tbCommentAuthor" class="author" disabled="disabled" size="50"
+                 value="{{ request.user.username }}"></p>
+    <h4>评论内容:</h4>
+    <div>
+        <textarea name="" id="comment_content" cols="60" rows="10"></textarea>
+        <div>
+            <button id="sub_comment" class="btn btn-default" style="width: 80px;height: 30px">提交评论</button>
+        </div>
+    </div>
+    <div class="msg" user="{{ request.user.username}}" path="{{ request.path }}"></div>
+{% endblock %}
+{% block page-js %}
+    <script src="/static/js/personal-article-updown.js"></script>
+    <script src="/static/js/personal-article-comment.js"></script>
+{% endblock %}
+{% block page-style %}
+    <style>
+        .comment {
+            margin-left: 20px;
+        }
+    </style>
+{% endblock %}

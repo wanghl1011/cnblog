@@ -1,0 +1,154 @@
+{% extends "manage.html" %}
+{% block page-style %}
+    <style>
+        #edit_title {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    .body{
+        height:1200px;
+    }
+    </style>
+{% endblock %}
+{% block page-article %}
+    <div id="Main">
+        <div id="Editor_Results_Header" class="CollapsibleHeader">
+            <span id="Editor_Results_headerTitle">编辑文章</span>
+        </div>
+        <form action="/blog/edit/article/{{ article.nid }}" method="post">
+            <div id="edit_title">
+                <b>标题</b>
+                <br>
+                <input name="article_title" value="{{ article.title }}" type="text" maxlength="200" id="Editor_Edit_txbTitle" style="width:99%;">
+            </div>
+            <div><strong>内容</strong></div>
+            <div>
+                {% csrf_token %}
+                <textarea id="editor" name="content">{{ article.articledetail.content|safe }}</textarea>
+
+                {#                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">#}
+                <div class="panel panel-default" style="margin-top: 10px">
+                    <div class="panel-heading" role="tab" id="cate">
+                        <h4 class="panel-title">
+                            <a style="font-size: 15px" role="button" data-toggle="collapse"
+                               data-parent="#accordion"
+                               href="#blog_cate"
+                               aria-expanded="true" aria-controls="blog_cate">
+                                个人分类
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="blog_cate" class="panel-collapse collapse in" role="tabpanel"
+                         aria-labelledby="cate">
+                        <div class="panel-body">
+                            <div>
+                                {% for cate in cate_list %}
+                                    {% if article.article_cate.nid == cate.nid %}
+                                        <label for="{{ cate.cate_name }}">{{ cate.cate_name }}</label>
+                                        <input id="{{ cate.cate_name }}" checked type="radio" name="article_cate"
+                                               value="{{ cate.nid }}">
+                                    {% else %}
+                                        <label for="{{ cate.cate_name }}">{{ cate.cate_name }}</label>
+                                        <input id="{{ cate.cate_name }}" type="radio" name="article_cate"
+                                               value="{{ cate.nid }}">
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {#                </div>#}
+                {#                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">#}
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="w_cate">
+                        <h4 class="panel-title">
+                            <a style="font-size: 15px" role="button" data-toggle="collapse"
+                               data-parent="#accordion"
+                               href="#web_cate"
+                               aria-expanded="true" aria-controls="web_cate">
+                                网站分类
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="web_cate" class="panel-collapse collapse in" role="tabpanel"
+                         aria-labelledby="w_cate">
+                        <div class="panel-body">
+                            <div>
+                                {% for cate in webcate_list %}
+                                    <div>
+                                        <span>{{ cate.name }}：</span>
+                                        {% for catedetail in cate.catewebsitedetail_set.all %}
+                                            {% if article.catewebsitedetail.id == catedetail.id %}
+                                                <span>
+                                                    <label for="{{ catedetail.name }}">{{ catedetail.name }}</label>
+                                                        <input id="{{ catedetail.name }}" checked type="radio"
+                                                               name="article_website"
+                                                               value="{{ catedetail.id }}"></span>
+                                            {% else %}
+                                                <span>
+                                                    <label for="{{ catedetail.name }}">{{ catedetail.name }}</label>
+                                                        <input id="{{ catedetail.name }}" type="radio"
+                                                               name="article_website"
+                                                               value="{{ catedetail.id }}"></span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="w_tag">
+                        <h4 class="panel-title">
+                            <a style="font-size: 15px" role="button" data-toggle="collapse"
+                               data-parent="#accordion"
+                               href="#tag"
+                               aria-expanded="true" aria-controls="tag">
+                                个人标签
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="tag" class="panel-collapse collapse in" role="tabpanel"
+                         aria-labelledby="w_tag">
+                        <div class="panel-body">
+                            <div>
+                                {% for tag in tag_list %}
+                                    {% if tag.nid in tags_id %}
+                                        <label for="{{ tag.nid }}">{{ tag.tag_name }}</label>
+                                        <input id="{{ tag.nid }}" checked type="checkbox" name="tag" value="{{ tag.nid }}">
+                                    {% else %}
+                                        <label for="{{ tag.nid }}">{{ tag.tag_name }}</label>
+                                        <input id="{{ tag.nid }}" type="checkbox" name="tag" value="{{ tag.nid }}">
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {#                </div>#}
+                <input type="submit" value="保存修改" class="btn btn-default">
+            </div>
+        </form>
+    </div>
+{% endblock %}
+{% block page-script %}
+    <script>
+        KindEditor.ready(function (K) {
+            window.editor = K.create('#editor', {
+                width: '100%',
+                height: "400px",
+                //items:[]
+                resizeType: 1,
+                uploadJson: "/blog/upload_img/",
+                extraFileUploadParams: {
+                    csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
+
+                },
+                filePostName: "article_img"
+            });
+        editor.sync()
+        });
+    </script>
+{% endblock %}

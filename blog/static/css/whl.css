@@ -1,0 +1,67 @@
+.caidan,.caidan1{
+    color: white;
+    background-color: #333333;
+
+}
+.hide{
+    display: none;
+}
+.caidan{
+    border-bottom: 1px solid #222222;
+}
+a.t {
+    font-size: 12px;
+    padding-left: 30px;
+}
+
+a.t1 {
+    font-size: 12px;
+    padding-left: 250px;
+}
+
+#conment {
+    text-decoration: none;
+}
+
+.user_img {
+    border: double 1px slategrey;
+}
+
+.article_desc, .article_time, #conment, .up {
+    font-size: 13px;
+}
+
+.article_desc {
+    text-align: justify;
+    margin-left: 8px
+}
+
+#article_title {
+    text-decoration: underline;
+    color: #105cb6;
+}
+
+#article_title:hover {
+    color: red;
+}
+
+.info {
+    margin-top: 10px;
+}
+
+.hide {
+    display: none;
+}
+
+.cate {
+    width: 150px;
+    height: 30px;
+    border: 1px solid grey;
+    line-height: 30px;
+    text-align: center;
+    background-color: gainsboro;
+}
+
+.catedetail {
+    text-decoration: none;
+}

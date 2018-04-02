@@ -1,0 +1,40 @@
+body{
+            padding: 0;
+        }
+/*.zuo{*/
+    /*border: double 1px dimgrey;*/
+/*}*/
+.blog_title{
+    margin-top: 0;
+    width:100%;
+    height:80px;
+    background-color:royalblue;
+    line-height: 80px;
+}
+.title{
+    float:left;
+    color: #fff;
+    font-family: 华文细黑,黑体,Arial;
+    font-size: 22px;
+}
+a.title:hover{
+    color: #fff;
+    text-decoration: none ;
+}
+.blog_body{
+    margin-top: 20px;
+}
+.click{
+    margin-left:10px;
+    margin-top: 45px;
+    width:65px;
+    height:30px;
+    background-color:#5ab2ce ;
+    float:right;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+}
+.click:hover{
+    text-decoration: none;
+}

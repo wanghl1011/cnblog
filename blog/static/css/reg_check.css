@@ -1,0 +1,25 @@
+.img{
+    position: absolute;
+    left:15px;
+    top:0;
+    width: 60px;
+    height: 60px;
+}
+#file{
+    position: absolute;
+    left:15px;
+    top:0;
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+}
+.father{
+    width: 60px;
+    height: 60px;
+    position: relative;
+    left: 0;
+    top: 0;
+}
+.box{
+    margin-bottom: 20px;
+}
