@@ -1,5 +1,6 @@
 from django.contrib import admin
 from blog.models import *
+# 111
 # Register your models here.
 admin.site.register(UserInfo)
 admin.site.register(Blog)
